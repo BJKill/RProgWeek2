@@ -124,3 +124,16 @@ tmp3 <- lapply(files_full, read.csv)
 dat3 <- do.call(rbind, tmp3)
 str(dat3)
 
+##SO, TL;DR ON MAKING DATAFRAME FROM FILES AND READING DIRECTLY INTO 'Data' FOLDER:
+oldwd <- getwd()
+setwd("Data")
+dataset_url <- "http://s3.amazonaws.com/practice_assignment/diet_data.zip"
+download.file(dataset_url, "diet_data.zip")
+unzip("diet_data.zip", exdir = "diet_data")
+list.files("diet_data")
+files_full <- list.files("diet_data", full.names = TRUE)
+tmp4 <- lapply(files_full, read.csv)
+dat4 <- do.call(rbind, tmp4)
+str(dat4)
+setwd(oldwd)
+
