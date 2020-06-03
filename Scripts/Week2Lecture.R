@@ -246,17 +246,44 @@ g(2) #ta daaaaa
 
 
 
+##Optimization for parameters on a vector of data.
+make.NegLogLik <- function(data, fixed=c(FALSE,FALSE)) {
+  params <- fixed
+  function(p) {
+    params[!fixed] <- p
+    mu <- params[1]
+    sigma <- params[2]
+    ##Caclulate the Normal density by **minimizing negative LLE**
+    a <- -0.5*length(data)*log(2*pi*sigma^2)
+    b <- -0.5*sum((data-mu)^2)/sigma^2
+    -(a+b)
+  }
+}
+
+set.seed(1); normals <-rnorm(100,1,2)
+nLL <- make.NegLogLik(normals)
+nLL    
+nLL() #returned error. no 'p' defined
+ls(environment(nLL))
+
+optim(c(mu = 0, sigma = 1), nLL)$par  #returns 1.2182 and 1.7873
+
+#fixing sigma  = 2
+nLL2 <- make.NegLogLik(normals,c(FALSE,2))
+optimize(nLL2, c(-1,3))$minimum       #returns 1.2178
+
+#fixing mu = 1
+nLL1 <- make.NegLogLik(normals, c(1, FALSE))
+optimize(nLL1, c(1e-6,10))$minimum    #returns 1.8006
 
 
+##plot it
+nLL1 <- make.NegLogLik(normals, c(1,FALSE))
+x <- seq(1.7, 1.9, len = 100)
+y <- sapply(x, nLL1)
+plot(x, exp(-(y-min(y))))
 
-
-
-
-
-
-
-
-
-
-
-
+Nll2 <- make.NegLogLik(normals, c(FALSE,2))
+x2 <- seq(0.5, 1.5, len = 100)
+y2 <- sapply(x2, Nll2)
+plot(x2, exp(-(y2-min(y2))))
