@@ -246,7 +246,7 @@ g(2) #ta daaaaa
 
 
 
-##Optimization for parameters on a vector of data.
+##Optimization for parameters on a vector of data. #more advanced but needed for Stats
 make.NegLogLik <- function(data, fixed=c(FALSE,FALSE)) {
   params <- fixed
   function(p) {
@@ -281,9 +281,64 @@ optimize(nLL1, c(1e-6,10))$minimum    #returns 1.8006
 nLL1 <- make.NegLogLik(normals, c(1,FALSE))
 x <- seq(1.7, 1.9, len = 100)
 y <- sapply(x, nLL1)
-plot(x, exp(-(y-min(y))))
+plot(x, exp(-(y-min(y))), type = "l") #'l' for line graph
 
 Nll2 <- make.NegLogLik(normals, c(FALSE,2))
 x2 <- seq(0.5, 1.5, len = 100)
 y2 <- sapply(x2, Nll2)
-plot(x2, exp(-(y2-min(y2))))
+plot(x2, exp(-(y2-min(y2))), type = "l")
+
+
+##coding standards notes: 4 to 8 space indents w/ 80 col margin
+
+
+
+##dates and times in R (YYYY-MM-DD)
+#dates are 'Date' class. Stored internally as # days since 1970-01-01
+#times are 'POSIXct' or 'POSIXlt' class. Stored int as #secs since 1970-01-01
+
+x<- as.Date("1970-01-01")
+x
+unclass(x)                        #returns '0'
+unclass(as.Date("1970-01-02"))    #returns '0'
+
+#'POSIXct' is a very large integer
+#'POSIXlt' is a list with day of week, day of year, month, day of month
+#'weekdays' gives day of week
+#'months' gives month name
+#'quarters' gives quarter number 'Q1', 'Q2', etc
+
+x <- Sys.time()       
+x                     #now in "POSIXct' form
+unclass(x)            #returns '1591218051'
+x$sec                 #returns error - wrong type
+p <- as.POSIXlt(x)    #change time type to list
+names(unclass(p))     #look at names of list objects, see '$sec' '$hour' '$isdst' etc
+p
+unclass(p)
+p$sec
+p$hour
+
+
+datestring <- c("January 10, 2012 10:40", "December 9, 2011 9:10")
+x <- strptime(datestring, "%B $d, %Y %H:%M") #%B = unabrev Month, %Y = YYYY
+x
+class(x)
+?strptime
+
+x <- as.Date("2012-01-01")
+unclass(x)
+y <- strptime("9 Jan 2011 11:34:21", "%d %b %Y %H:%M:%S")
+unclass(y)
+x-y               ##x-y returns error b/c x is 'ct' and y is 'lt'
+x<-as.POSIXlt(x)  ##change x to 'lt' time
+x-y               ##returns 'Time difference of 356.3 days'
+
+
+x <- as.Date("2012-03-01") 
+y <- as.Date("2012-02-28")
+x-y             ##returns 'Time difference of 2 days' bc it knows about leap year!
+
+x <- as.POSIXct("2012-10-25 01:00:00")
+y <- as.POSIXct("2012-10-25 06:00:00", tz = "GMT")  
+y-x             ##returns 'Time difference of 1 hours' bc it knows time zones!
