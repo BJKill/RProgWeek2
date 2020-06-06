@@ -23,10 +23,10 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
 }
 
 ## Output to test but not source on save
-#pollutantmean("specdata", "nitrate")
-#pollutantmean("specdata", "nitrate", 1:5)
-#pollutantmean("specdata", "nitrate", c(1:5, 32, 58))
-#pollutantmean("specdata", "sulfate", 1:10)
-#pollutantmean("specdata", "nitrate", 70:72)
-#pollutantmean("specdata", "nitrate", 23)
+# pollutantmean("specdata", "nitrate")
+# pollutantmean("specdata", "nitrate", 1:5)
+# pollutantmean("specdata", "nitrate", c(1:5, 32, 58))
+# pollutantmean("specdata", "sulfate", 1:10)
+# pollutantmean("specdata", "nitrate", 70:72)
+# pollutantmean("specdata", "nitrate", 23)
 
