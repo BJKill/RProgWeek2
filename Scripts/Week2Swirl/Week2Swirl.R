@@ -129,3 +129,43 @@ Sys.time() > t1                            #prints TRUE bc the time now is later
 Sys.time() - t1                            #prints 'Time difference of 8.783564 min'
 difftime(Sys.time(), t1, units = 'days')   #prints 'Time difference of 0.006855525 days'
 
+
+## Section 9: Functions. All functions defined in own file.
+
+Sys.Date()
+
+mean(c(2, 4, 5))
+
+boring_function("My first function!")
+boring_function
+
+my_mean(c(4,5,10))
+
+remainder(5)
+remainder(11,5)
+remainder(divisor = 11, num = 5)
+remainder(4, div = 2)
+args(remainder)
+
+evaluate(sum,c(2,4,6))
+evaluate(median,c(7,40,9))
+evaluate(floor, 11.1)
+evaluate(sd, c(1.4, 3.6, 7.9, 8.8))
+
+#using "anonymous functions"
+evaluate(function(x){x+1}, 6)
+evaluate(function(x){x[1]}, c(8, 4, 0))
+evaluate(function(x){x[3]}, c(8, 4, 0))
+
+?paste
+paste("Programming", "is", "fun!")
+
+telegram("Fuck", "the", "police!")
+
+mad_libs("place" = "London", adjective = "slimy", noun = "fingernail")
+
+4 %mult_add_one% 5
+
+"Good" %p% "job!"
+"I" %p% "love" %p% "R!"
+
