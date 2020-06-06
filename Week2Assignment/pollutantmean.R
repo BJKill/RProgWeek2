@@ -1,24 +1,24 @@
 ## Part 1: finding mean of certain pollutants at certain locals
 
 pollutantmean <- function(directory, pollutant, id = 1:332) {
-  files_full2 <- list.files(c("Data/", directory), full.names = TRUE)
+  files_full <- list.files(directory, full.names = TRUE)
   #build data frame from files
-  dat2 <- data.frame()
-  for(i in seq_along(files_full2)) {
-    dat2 <- rbind(dat2, read.csv(files_full2[i]))
+  dat <- data.frame()
+  for(i in seq_along(files_full)) {
+    dat <- rbind(dat, read.csv(files_full[i]))
   }
   #Make list of data with with polutant and id nums
-  dat2_subset <- list()
+  dat_subset <- list()
   for(i in seq_along(id)) {
-    dat2_subset[[i]] <- dat2[[pollutant]][which(dat2$ID == id[i])]
+    dat_subset[[i]] <- dat[[pollutant]][which(dat$ID == id[i])]
   }
   #Make list into numberic vector
-  dat2_subset2 <- vector()
-  for(i in seq_along(dat2_subset)) {
-    dat2_subset2 <- c(dat2_subset2, dat2_subset[[i]])
+  dat_subset2 <- vector()
+  for(i in seq_along(dat_subset)) {
+    dat_subset2 <- c(dat_subset2, dat_subset[[i]])
   }
   #str(dat2_subset2)
-  avg <- mean(dat2_subset2, na.rm = TRUE)
+  avg <- mean(dat_subset2, na.rm = TRUE)
   avg
 }
 
